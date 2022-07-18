@@ -1,0 +1,173 @@
+一、静态库/动态库概要
+	在Windows下静态库的后缀为：.lib、动态库后缀为：.dll；而在Linux下静态库的后缀为：.a、动态库的后缀为：.so。
+
+二、那么什么是静态库呢？
+
+	首先我们来看看程序编译的大体流程：预处理——编译——汇编——链接
+
+	在我们的项目开发中，有些代码会被反复使用，那么这时我们便可将这些代码编译成库的形式来调用，像静态库就是在可执行文件中包含库代码的一份完整拷贝，
+	但这种方式有个很严重的缺点就是会造成多份冗余拷贝。静态库会在程序的链接阶段被复制到程序中，所以程序在运行后是不会调用静态库的。
+
+三、那动态库又是什么呢？
+
+	动态库不像静态库那样，在链接阶段并没有被复制到程序中，反而是程序运行的时候由系统动态的加载到内存中供程序调用，所以这里解决了静态库早晨多份冗余拷贝的缺点，
+	系统只需要载入一次动态库，不同的程序可以得到内存中相同的动态库副本，因此可以节省大量的内存。
+
+
+
+四、生成静态库/动态库
+	下面进入主题看看在linux中如何生成静态库跟动态库：
+
+	首先我们先创建三个文件，分别为hello.cc、hello.h、main.cc，如下图：
+
+		//“hello.h"：
+		#ifndef __HELLO_H__
+		#define __HELLO_H__
+		 
+		#include <stdio.h>
+		 
+		void Hello();
+		
+		#endif
+		
+		
+		//"hello.cc"：
+		#include "hello.h"
+		 
+		void Hello()
+		{
+			printf("Hello World!!!\n");
+		}
+		
+		
+		//"main.cc"：
+		#include "hello.h"
+		 
+		int main(void)
+		{
+			Hello();
+		 
+			return 0;
+		}
+		
+		
+	这时我们hello world代码算是写完了。接下来我们生成静态库：
+
+		g++ -o main main.cc -static -lhello -L.
+
+	我们先简单介绍下"gcc"跟"g++":gcc 最开始的时候是 GNU C Compiler, 如你所知，就是一个c编译器。但是后来因为这个项目里边集成了更多其他不同语言的编译器，
+	GCC就代表 the GNU Compiler Collection，所以表示一堆编译器的合集。 g++则是GCC的c++编译器。
+
+
+	此处我们使用g++，如果使用c语言可以将g++改为gcc：
+
+		1、将hello.cc编译成hello.o（静态库和动态库都是由.o文件生成）
+
+			g++ -c hello.cc
+			
+		2、为了遵循linux中静态库的命名规范，静态库命名为libhello.a
+
+			ar cr libhello.a hello.o
+			
+		3、将main.cc与静态库连接，生成可执行文件：“main”
+
+			g++ -o main main.cc -static -lhello -L.
+			
+			最后文件如下如：
+				-code
+				 hello.cc
+				 hello.h
+				 hello.o
+				 libhello.a
+				 main
+				 main.cc
+
+
+		4、运行可执行文件
+
+			./main
+			
+			
+五、下面进行动态库的生成：
+
+	1、生成动态库libhello.so
+
+		g++ -c -fPIC hello.cc -o hello.o
+		g++ -shared hello.o -o libhello.so
+		
+	当然这里我们可以直接通过cmake来生成动态库，下面我们用cmake的方式生成动态库并链接动态库。
+
+	首先我们改造下目录结构：
+		-code								-code2
+		 -build								 -build
+		 -lib								 -src
+		  CMakeLists.txt					  CMakeLists.txt
+		  hello.cc							  main.cc
+		  hello.h							 CMakeLists.txt
+		 CMakeLists.txt
+	  
+
+	我们删除上一步生成的静态库跟动态库，只保留源代码，在开始的code目录下创建两个文件夹分别是：build、lib；在code跟lib目录下分别创建一个CMakeLists.txt文件
+	（用于编写cmake代码），并在code同级目录下创建code2目录，在该目录下创建build、src目录，将之前的main.cc移到src下，在code2目录跟src目录下创建CMakeLists.txt文件，
+	先来看看code目录下的CMakeLists.txt文件，代码如下：
+
+		PROJECT(HELLOLIB)
+		ADD_SUBDIRECTORY(lib)
+		
+	lib目录下的CMakeLists.txt文件代码如下：
+
+		SET(LIBHELLO_SRC hello.cc)
+		ADD_LIBRARY(hello SHARED ${LIBHELLO_SRC})
+		INSTALL(TARGETS hello hello
+		LIBRARY DESTINATION lib)
+		INSTALL(FILES hello.h DESTINATION include/hello)
+		
+	对上面代码解析下，ADD_LIBRARY用于生成库文件，hello是动态库名（libxxx.x中xxx的名字）,SHARED表示生成的库为动态库。之后的INSTALL是安装共享库和头文件，
+	安装到系统库中（/usr/lib跟usr/include/hello目录下，这里的hello文件夹是我自己创建的）。
+
+	最后在build目录下运行终端（在执行INSTALL时需要用到root权限，所以在执行make前先切换到root模式下），输入命令行如下：
+
+		cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+		make
+		make install
+		
+	可以到指定目录中查看库跟头文件已经成功安装到了指定目录下。
+
+	下面我们在main.cc中调用我们生成的动态库。
+
+	首先我们先将main.cc中引入的头文件#include "hello.h"改为#include <hello.h>;
+
+	我们先看看code2目录下的CMakeLists.txt下的脚本：
+
+		PROJECT(NEWHELLO)
+		ADD_SUBDIRECTORY(src)
+	
+	src目录下的CMakeLists.txt脚本如下：
+
+		ADD_EXECUTABLE(main main.cc)
+		INCLUDE_DIRECTORIES(/usr/include/hello)
+		TARGET_LINK_LIBRARIES(main libhello.so)
+		
+	跟上面一样我们在终端下来到build目录，并输入命令行如下：
+
+		cmake ..
+		make
+		
+	得到的输出为：Hello World!!!
+
+	到这里我们链接库的实例就说完了。cmake是个好东西！你值得拥有！
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

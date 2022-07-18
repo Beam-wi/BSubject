@@ -1,0 +1,57 @@
+一、数据类型
+	1) 实型
+		float f1 = 3.14f;	//6位，4字节
+		double d1 = 3.1415926;	//14位，8字节
+		
+	2) 字符型
+		1. 表示方法
+			char ch = 'a';	
+			cout << "char字符型变量所占内存： "<< sizeof(char) << endl;		//1个字节
+			
+		2. 字符型变量常见错误
+			//char ch2 = "b";	//创建字符型变量时，要用单引号
+			//char ch2 = "abcdef";	//创建字符型变量时，单引号内只能有一个字符
+		
+		3. 字符型变量对应ASCII编码
+			cout << (int)ch << endl;	//强转查看	a-97, A-65
+	
+	3) 转义字符
+		作用：用于表示一些不能显示出来的ASSCII字符
+		1. //换行符 \n
+			cout << "hello world\n";
+			
+		2. //反斜杠 \\
+			cout << "\\" << endl;	//输出反斜杠
+			
+		3. //水平制表符 \t
+			cout << "aa\thelloworld";	//整齐输出8位如：aa      helloworld
+	
+	4) 字符串型
+		1. C语言风格
+			char str[] = "hello world";		//char 字符串名后面一定要有[]，等号后面要用双引号包起来。
+			cout << str << endl;
+			
+		2. C++风格
+			//必须包含头文件：#include <string>
+			string str2 = "hello world";
+			cout << str2 << endl;
+			
+	5) 布尔类型bool
+		//bool类型只有两个值：true,false 本质是(1,0)，只占1个字节大小, 只要是非0的数字都代表真。
+		1. 创建bool数据类型
+			bool flag = true;
+			cout << flag << endl;	//输出：1
+			
+			flag = false;
+			cout << flag << endl;	//输出：0
+			
+		2. 查看bool类型所占内存空间
+			cout << "bool类型所占内存空间：" << sizeof(bool) << endl;	//输出：1
+			
+	5) 数据的输入
+		//用于从键盘获取数据	cin >> 变量名
+		1. 整型
+			int a = 0;
+			cout << "请给整型变量a赋值：" << a << endl;
+			cin >> a;
+			cout << "整型变量a= " << a << endl;
