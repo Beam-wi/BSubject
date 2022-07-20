@@ -1,0 +1,99 @@
+三、运算符		
+	1) 加减乘除运算符
+		int a1 = 10;
+		int b1 = 3;
+		
+		cout << a1 + b1 << endl;
+		cout << a1 - b1 << endl;
+		cout << a1 * b1 << endl;
+		cout << a1 / b1 << endl;	//两个整数相除结果依然是整数，将小数部分去掉， 分母不能为零。
+		
+		double d1 = 0.5;
+		double d2 = 0.22;
+		cout << d1 /d2 << endl;	//两个小数相除，运算结果整除时为整数，其他为小数。
+	
+	
+	2) 取模运算
+		求余数
+		
+		int a1 = 10;
+		int b1 = 3;
+		
+		cout << a1 % b1 << endl;	//结果为1， 两个小数不能取模运算。
+	
+	
+	3) 递增递减运算
+		1. 前置递增
+			int a = 10;
+			++a;	//让变量+1
+			cout << "a = " << a << endl;	//结果：11
+			
+		2. 后置递增
+			int b = 10;
+			b++;	//让变量+1
+			cout << "b = " << b << endl;	//结果：11
+			
+		3. 前置和后置的区别
+			//前置递增 先让变量+1 然后进行表达式运算
+			int a2 = 10;
+			int b2 = ++a2 * 10;	//a2先加1得出a2，然后乘10得出a2，b2
+			cout << "a2 = " << a2 << endl;	//结果：11
+			cout << "b2 = " << b2 << endl;	//结果：110
+	
+			//后置递增 先进行表达式运算 然后让变量+1
+			int a2 = 10;
+			int b2 = a2++ * 10;	//a2先乘10得出b2，然后a2+1得出a2
+			cout << "a2 = " << a2 << endl;	//结果：11
+			cout << "b2 = " << b2 << endl;	//结果：100
+	
+	4) 赋值运算符
+		1. =、+=、-=、*=、/=、%=
+			int a = 10;
+			a = 100;
+			cout << "a = " << a << endl:
+			
+	5) 比较运算符
+		//用于表达式的比较。并返回一个真值或假值,1 或 0
+		// ==	!=	>	< 	>=	<=
+		
+	6) 逻辑运算符
+		// !	&&	||	非	与	或
+		1. ! 逻辑运算符 非，在C++中除了0都为真
+			int main()	{
+				int a = 10;
+				cout << !a << endl;		//打印0
+				cout << !!a << endl;	//打印1
+				system("pause");
+				return 0;
+			}
+		
+		2. && 逻辑运算符 与
+			int main()	{
+				int a = 10;
+				int b = 10;
+				cout << (a && b) << endl;		//打印1
+				int a = 0;
+				int b = 10;
+				cout << (a && b) << endl;		//打印0
+				int a = 0;
+				int b = 0;
+				cout << (a && b) << endl;		//打印0
+				system("pause");
+				return 0;
+			}
+			
+		3. || 逻辑运算符 或
+			int main()	{
+				int a = 10;
+				int b = 10;
+				cout << (a || b) << endl;		//打印1
+				int a = 0;
+				int b = 10;
+				cout << (a || b) << endl;		//打印1
+				int a = 0;
+				int b = 0;
+				cout << (a || b) << endl;		//打印0
+				system("pause");
+				return 0;
+			}
+			

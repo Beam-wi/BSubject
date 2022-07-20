@@ -1,0 +1,278 @@
+八）、结构体
+	1）、结构体的基本概念
+		结构体属于用户自定义的数据类型，允许用户存储不同的数据类型
+		
+	2）、结构体定义和使用
+		语法：struct 结构体名 {结构体成员列表};
+		1. 定义
+			strcut 结构体名
+			{
+				属性变量定义
+				...
+			}
+			
+		2. 使用
+			通过结构体创建变量的方式又三种：	(先自定义结构体, 创建变量时 struct 关键字可以省略)
+			a. struct 结构体名 变量名
+			b. struct 结构体名 变量名 = {成员1值, 成员2值...}
+			c. 定义结构体时顺便创建变量
+	
+		//1. 创建学生数据类型：学生包括（姓名，年龄，分数）
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		}s3;
+		
+	
+		int main(){		
+			//2.1 struct Student s1
+			struct Student s1;
+			//给s1属性赋值，通过 . 访问结构体变量中的属性
+			s1.name = "张三";
+			s1.age = 18;
+			s1.score = 100;
+			
+			cout << "姓名：" << s1.name << "年龄" << s1.age << "分数" << s1.score << endl;
+			
+			//2. struct Student s2 = {...}
+			struct Student s2 = {"李四", 19, 80}
+			cout << "姓名：" << s2.name << "年龄" << s2.age << "分数" << s2.score << endl;
+						
+			//3. 在定义结构体时顺便创建结构体变量
+			s3.name = "王五";
+			s3.age = 20;
+			s3.score = 10;
+			cout << "姓名：" << s3.name << "年龄" << s3.age << "分数" << s3.score << endl;
+
+			system("pause");
+			
+			return 0;
+		}
+		
+		总结：
+			a. 定义结构体时的关键字是struct，不可省略
+			b. 创建结构体变量时，关键字struct可以省略
+			c. 结构体变量利用操作符 “.” 访问
+
+	3）、结构体数组
+		作用：将自定义的结构体放入到数组中方便维护
+		语法：struct 结构体名 数组名[元素个数] = {{}, {}, ... {}}
+		
+		#include<iostream>
+		using namespace std;
+		#include<string>
+
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		};
+
+		int main(){		
+			//1.创建结构体数组
+			struct Student stuArray[3] = 
+			{
+				{"张三", 18, 100},
+				{"李四", 28, 99},
+				{"王五", 38, 66}
+			}
+			//2.修改结构体数组中的值
+			stuArray[2].name = "王麻子"
+
+			cout << "姓名：" << s1.name << "年龄" << s1.age << "分数" << s1.score << endl;
+			
+			//3.遍历结构体数组
+			for (int i = 0; i < 3; i++)
+			{
+				cout << "姓名：" << stuArray[i].name 
+					 << "年龄: " << stuArray[i].age 
+					 << "分数: " << stuArray[i].score << endl;
+			}
+			
+			system("pause");
+			
+			return 0;
+		}
+
+
+	4）、结构体指针
+		作用：通过指针访问结构体中的属性
+		
+		利用操作符 -> 可以通过结构体指针访问结构体属性
+
+		#include<iostream>
+		using namespace std;
+		#include<string>
+
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		};
+
+		int main(){		
+			//1.创建结构体变量
+			struct Student s = {"张三", 18, 100};
+			
+			//2.通过指针指向结构体变量
+			struct Student * p = &s;
+
+			//3.通过指针访问结构体变量中的属性
+			cout << "姓名：" << p->name 
+				 << "年龄: " << p->age 
+				 << "分数: " << p->score << endl;
+
+			system("pause");
+			
+			return 0;
+		}
+
+
+	5）、结构体嵌套结构体
+		作用：结构体中的成员可以说拎一个结构体
+		
+		#include<iostream>
+		using namespace std;
+		#include<string>
+
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		};
+		
+		struct Teacher
+		{
+			//属性列表
+			int id;					//教师编号
+			string name;			//教师姓名
+			int age;				//年龄
+			strcut Student stu;		//辅导的学生
+		};
+
+		int main(){		
+			//1.创建结构体变量
+			struct Ttudent t;
+			t.id = 10000;
+			t.name = "老族长";
+			t.age = 30;
+			t.stu.name = "小王";
+			t.stu.age = 20;
+			t.stu.score = 60;
+			
+			cout << "老师姓名：" << t.name << "老师编号：" << t.id 
+				 << "老师年龄：" << t.age << "学生名字：" << t.stu.name 
+				 << "学生年龄：" << t.stu.age << "学生成绩：" << t.stu.score << endl;
+			
+			system("pause");
+			
+			return 0;
+		}
+
+		总结：在结构体中可以定义另一个结构体作为成员，用来解决实际问题
+
+	
+	6）、结构体做函数参数
+		作用：将结构体作为参数向函数中传递
+		
+		传递方式有两种：
+			a. 值传递
+			b. 地址传递
+
+		#include<iostream>
+		using namespace std;
+		#include<string>
+
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		};
+		
+		//值传递
+		void printStudnet1(struct Student s;)
+		{
+			s.age = 100;
+			cout << "学生名字：" << s.name << "学生年龄：" << s.age << "学生成绩：" << s.score << endl;
+		}
+		
+		//地址传递
+		void printStudnet2(struct Student * p;)
+		{
+			s.age = 200;
+			cout << "学生名字：" << p->name << "学生年龄：" << p->age << "学生成绩：" << p->score << endl;
+		}
+		
+		
+		{
+			//属性列表
+			int id;					//教师编号
+			string name;			//教师姓名
+			int age;				//年龄
+			strcut Student stu;		//辅导的学生
+		};
+
+		int main(){	
+			//结构体做函数，将学生传入到一个参数中，打印学生身上的所有信息
+			
+			//1.创建结构体变量
+			struct Student s;
+			s.name = "小王";
+			s.age = 20;
+			s.score = 60;
+			
+			printStudnet1(s);			//修改形参实参不会改变
+			printStudnet2(&s);			//修改形参实参也会改变		结构体的指针通过 p->attr 访问结构体中的属性
+			
+			system("pause");
+			
+			return 0;
+		}
+
+		总结：如果不想修改主函数中的数据，用值传递，反之用地址传递。
+
+	7）、结构体中const使用场景
+		作用：用const来防止误操作, 固定某些变量不能修改
+
+		#include<iostream>
+		using namespace std;
+		#include<string>
+
+		struct Student
+		{
+			//属性列表
+			string name;
+			int age;
+			int score;
+		};
+
+		//将函数中的形参改为指针，可以减少内存空间，而且不会复制新得副本出来
+		void printStudnet1(const struct Student *s;)
+		{
+			s->age = 100;
+			cout << "学生名字：" << s->name << "学生年龄：" << s->age << "学生成绩：" << s->score << endl;
+		}		
+		
+		int main(){	
+			//结构体做函数，将学生传入到一个参数中，打印学生身上的所有信息
+			
+			//1.创建结构体变量
+			struct Student s = {"小王", 15, 70};
+			
+			printStudnet1(&s);			//修改形参实参不会改变
+
+			system("pause");
+			
+			return 0;
+		}

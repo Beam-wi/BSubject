@@ -1,0 +1,240 @@
+七、指针
+	1）、指针基本概念		（指针就是保存变量地址的那个内存）
+		指针的作用：可以通过指针间接访问内存
+			1. 内存编号是从0开始记录的，一般用十六径指数字表示
+			2. 可以利用指针变量保存地址
+
+	2）、指针变量的定义和使用
+		语法：a. 定义指针：数据类型 * 指针变量名	（如 int * p）
+			  b. 关联指针：p = &a;
+
+		int main(){	
+			//1. 指针的定义
+			int a = 10;
+			int * p;						//定义指针
+			p = &a;							//让指针记录变量a的地址
+			cout << "a的地址为：" << &a << endl;		//00CFFA5C
+			cout << "指针p的地址为：" << p << endl;		//00CFFA5C
+			
+			//2. 指针的使用
+			//可以通过解引用的方式来找到指针指向的内存
+			//指针前加 * 代表解引用，找到指针指向的内存中的数据
+			*p = 1000;							//通过解引用的方式修改变量的值
+			cout << "a = " << a << endl;		//1000
+			cout << "*p = " << *p << endl;		//1000
+			
+			system("pause");
+			
+			return 0;
+		}
+		
+		int max(int a, int b)				//定义
+		{
+			return a > b ? a : b;
+		}
+
+
+	3）、指针所占用内存空间
+		提问：指针也是种数据类型，那么这种数类型占用多少内存空间？
+		
+		规定：与数据类型无关，在32位操作系统下指针规定占用4个字节空间，64位下占8个字节
+		
+		int main(){	
+			//指针所占内存空间
+			int a = 10;
+			//int * p;						
+			//p = &a;					
+			int * p = &a;		//一行代码定义和记录
+			cout << "sizeof (int *)：" << sizeof(int *) << endl;		//4
+			cout << "sizeof (int *)：" << sizeof(float *) << endl;		//4
+			cout << "sizeof (int *)：" << sizeof(double *) << endl;		//4
+			cout << "sizeof (int *)：" << sizeof(char *) << endl;		//4
+			
+			system("pause");
+			
+			return 0;
+		}
+		
+	4）、空指针和野指针
+		1. 空指针
+			空指针：指针变量指向内存中编号为0的空间
+			用途：初始化指针变量
+			注意：空指针指向的内存是不可以访问的（0-255内存是系统占用的不可以访问）
+			
+			int main(){				
+				int * p = NULL;		
+				cout << *p << endl;		//报错，因为空指针不可访问
+				
+				system("pause");
+				
+				return 0;
+			}		
+
+		2.野指针
+			野指针：指针变量指向非法的内存空间
+			注意：野指针是错误的程序中要避免野指针出现
+
+			int main(){		
+				//指针变量p指向内存地址编号为0x1100的空间
+				int * p = (int *)0x1100;		//变量前加&表示变量的指针，地址前加(int *)表示将地址强转指针。		
+				cout << *p << endl;				//报错，因为野指针访问报错
+				
+				system("pause");
+				
+				return 0;
+			}	
+
+		总结：空指针和野指针都不是我们申请的空间，因此不要访问。
+
+
+	5）、const修饰指针
+		const修饰指针有三种情况：
+		1. const修饰指针	---常量指针
+		2. const修饰常量	---指针常量
+		3. const既修饰指针又修饰常量
+		
+		读法技巧：看const右侧紧跟着的是指针还是常量，是指针就是常量指针，是常量就是指针常量
+
+		int main(){		
+			//1. const修饰指针	---常量指针
+			int a = 10;
+			int b = 10;
+			
+			const int * p = &a;
+			*p = 20;						//报错 指针指向的值（变量）不可以改
+			p = &b;							//正确 指针的指向（地址）可以改
+			
+			
+			//2. const修饰常量	---指针常量
+			int * const p2 = &a;
+			*p2 = 20;						//正确 指针指向的值（变量）可以改
+			p2 = &b;						//错误 指针的指向（地址）不可以改			
+			
+			//3. const既修饰指针又修饰常量
+			const int * const p3 = &a;
+			*p3 = 20;						//错误 指针指向的值（变量）不可以改
+			p3 = &b;						//错误 指针的指向（地址）不可以改	
+			
+			system("pause");
+			
+			return 0;
+		}
+
+		总结：const修饰谁谁就不可以改
+
+
+	6）、指针和数组
+		作用：利用指针访问数组中元素
+		
+		int main(){		
+			int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+			
+			cout << "第一个元素为：" << arr[0] << endl;
+			
+			//利用指针访问
+			int * p = arr;											//arr就是数组首地址
+			cout << "利用指针访问第一个元素：" << *p << endl;		//输出：1
+			p++;													//让指针向后偏移4个字节
+			cout << "利用指针访问第二个元素：" << *p << endl;		//输出：2
+			system("pause");
+			
+			return 0;
+		}
+
+	7）、指针和函数
+		作用：利用指针作函数参数，可以修改实参的值
+		
+		void swap01(int a, int b)
+		{
+			int temp = a;
+			a = b;
+			b = temp;
+			
+			cout << "swap01 a = " << a << endl;		//输出：20
+			cout << "swap01 b = " << b << endl;		//输出：10
+		}
+		
+		
+		void swap02(int *p1, int *p2)
+		{
+			int temp = *p1;
+			*p1 = *p2;
+			*p2 = temp;
+			
+			cout << "swap01 *p1 = " << *p1 << endl;	//输出：20
+			cout << "swap01 *p2 = " << *p2 << endl;	//输出：10
+		}
+		
+		
+		int main(){		
+			//1. 值传递
+			int a = 10;
+			int b = 20;
+			swap01(a, b);
+			cout << "a = " << a << endl;			//输出：10
+			cout << "b = " << b << endl;			//输出：20
+			
+			
+			//2. 地址传递
+			swap02(&a, &b);
+			
+			cout << "a = " << a << endl;			//输出：20
+			cout << "b = " << b << endl;			//输出：10
+		
+			int * p = arr;											//arr就是数组首地址
+			cout << "利用指针访问第一个元素：" << *p << endl;		//输出：1
+			p++;													//让指针向后偏移4个字节
+			cout << "利用指针访问第二个元素：" << *p << endl;		//输出：2
+			system("pause");
+			
+			return 0;
+		}		
+
+		总结：如果不想修改实参，就用值传递，如果想需改实参，就用地址传递
+
+	
+	8）、指针、素组、函数 案例
+		案例描述：封装一个函数，利用冒泡排序，实现对整型数组的升序排序
+		例如素组：int arr[10] = {4, 3, 6, 9, 1, 2, 10, 8, 7, 5};
+		
+		void bubblSort(int * arr, int len)
+		{
+			for (int i = 0; i < len-1; i++)
+			{
+				for (int j = 0; j < len-i-1; j++)
+				{
+					if (arr[j] > arr[j+1])
+					{
+						int temp = arr[j];
+						arr[j] = arr[j+1];
+						arr[j+1] = temp;
+					}
+				}
+			}
+		}
+		
+		
+		void printArray(int * arr, int len)
+		{
+			for (int i = 0; i < len; i++)
+			{
+				cout << arr[i] << endl;
+			}
+		}
+		
+		
+		int main(){		
+			//1. 创建数组
+			int arr[10] = {4, 3, 6, 9, 1, 2, 10, 8, 7, 5};
+			int len = sizeof(arr)/sizeof(arr[0]);
+			
+			//2. 创建函数，实现冒泡排序
+			bubbleSort(arr, len)
+			
+			//3. 打印排序后的数组
+			printArray(arr, len);
+
+			system("pause");
+			
+			return 0;
+		}

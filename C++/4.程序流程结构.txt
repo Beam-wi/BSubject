@@ -1,0 +1,317 @@
+四、程序流程结构
+	1) 选则结构
+		1. 单行if语句	格式：if(条件){条件满足执行的语句}
+			//单行if语句，注意在if条件语句后不要加分号，加分号表示两段语句不管条件是否满足都会执行下一行
+			int main()	{
+				int score = 0;
+				cout << "请输入一个分数：" << endl;	
+				cin >> score;
+				cout << "您输入的分数为：" << score << endl;		//打印650
+				if(score > 600)
+				{
+					cout << "恭喜您考上一本：" << endl;		
+				}
+				system("pause");
+				return 0;
+			}			
+			
+		2. 多行if语句	格式：if(条件){条件满足执行的语句}else{条件不满足执行的语句}
+			//
+			int main()	{
+				int score = 0;
+				cout << "请输入一个分数：" << endl;	
+				cin >> score;
+				cout << "您输入的分数为：" << score << endl;		//打印650
+				if(score > 600)
+				{
+					cout << "恭喜您考上一本：" << endl;		
+				}
+				else
+				{
+					cout << "您未考上一本：" << endl;	
+				}
+				system("pause");
+				return 0;
+			}				
+			
+			
+		3. 多条件if语句		格式：if(条件){条件满足执行的语句}else if{条件不满足执行的语句}...else{条件不满足执行的语句}
+			// 多条件从上到下满足进入执行后面条件不再判断。与python不一样。
+			int main()	{
+				int score = 0;
+				cout << "请输入一个分数：" << endl;	
+				cin >> score;
+				cout << "您输入的分数为：" << score << endl;		//打印650
+				if(score > 600)
+				{
+					cout << "恭喜您考上一本：" << endl;		
+				}
+				else if(score > 500)
+				{
+					cout << "恭喜您考上二本：" << endl;		
+				}
+				else
+				{
+					cout << "您未考上大学：" << endl;	
+				}
+				system("pause");
+				return 0;
+			}
+			
+			
+		4. 嵌套if语句	在if语句中可以嵌套使用if语句，达到更精细的条件判断。
+			// 
+			int main()	{
+				int score = 0;
+				cout << "请输入一个分数：" << endl;	
+				cin >> score;
+				cout << "您输入的分数为：" << score << endl;		//打印650
+				if(score > 600)
+				{
+					cout << "恭喜您考上一本：" << endl;
+					if (score > 700)
+					{
+						cout << "恭喜您考上北大：" << endl;
+					}
+					else if(score > 650)
+					{
+						cout << "恭喜您考上清华：" << endl;		
+					}
+				}
+				else if(score > 500)
+				{
+					cout << "恭喜您考上二本：" << endl;		
+				}
+				else
+				{
+					cout << "您未考上大学：" << endl;	
+				}
+				system("pause");
+				return 0;
+			}			
+			
+			
+		5. 三目运算符	语法 表达式1 ? 表达式2 : 表达式3
+			//创建三个变量a b c，比较a b大小将变量大的赋值给c，三目运算返回的是变量本身，而不只是变量值。
+			int main()	{
+				int a = 10;
+				int b = 20;
+				int c = 0;
+				
+				c = (a > b ? a : b);
+				cout << "c = " << c << endl;	//打印 20
+				
+				(a > b ? a : b) = 100;
+				cout << "a = " << a << endl;	//打印 10
+				cout << "b = " << b << endl;	//打印 100
+			}
+			
+		6. switch语句
+			//执行多条件分支语句
+			//语法：
+				switch(表达式)
+				{
+					case 结果1: 执行语句;break;
+					case 结果2: 执行语句;break;
+					...
+					default: 执行语句;break;
+				}
+			
+			//给电影打分，10~9经典 8~7非常好 6~5一般 5以下烂片
+			
+			cout << "请给电影打分" << endl;
+			int score = 0
+			cin >> score;
+			cout << "您打的分数为：" << score << endl;
+			
+			switch(score)
+			{
+				case 10:
+					cout << "您认为是经典电影" << endl;
+					break;	//退出当前分支
+				case 9:
+					cout << "您认为是经典电影" << endl;
+					break;
+				case 8:
+					cout << "您认为电影非常好" << endl;
+					break;
+				case 7:
+					cout << "您认为电影非常好" << endl;
+					break;
+				case 6:
+					cout << "您认为电影一般" << endl;
+					break;
+				case 5:
+					cout << "您认为电影一般" << endl;
+					break;					
+				default:
+					cout << "您认为是烂片" << endl;	
+					break;					
+			}
+			
+			//注：每个分支都要加break 不然会继续执行下面分支，不管下面分支条件是否满足。
+			//if和switch区别
+			//switch 缺点，判断时候只能是整型或者字符型，不可以是一个区间
+			//switch 优点，结构清晰，执行效率高
+			
+	2) 循环结构
+		1. while循环语句
+			//循环打印
+			int main()	{
+				int num = 0;
+				while(num < 10)
+				{
+					cout << num << endl;
+					num++;
+				}
+				
+				system("pause");
+				
+				return 0;
+				
+			}
+			
+			
+		2. do...while循环语句， 与while的区别在于do...while会先执行一次循环语句，在判断循环条件
+			//循环打印
+			int main()	{
+				int num = 0;
+				do
+				{
+					cout << num << endl;
+					num++;
+				}
+				while(num < 10);
+				
+				system("pause");
+				
+				return 0;
+			}
+			
+		3. for 循环语句  for(变量初始值，变量判断，变量操作)
+			//循环打印
+			int main()	{
+				int num = 0;
+				for(int i = 0; i < 10; i++)
+				{
+					cout << num << endl;
+				}
+				
+				system("pause");
+				
+				return 0;
+			}			
+			
+		4. 嵌套循环	
+			int main()	{
+				for(int i = 0; i < 10; i++)
+					for(int j = 0; j < 10; j++)
+					{
+						cout << "*";
+					}
+					cout << endl;		// << endl 是换行处理的意思，cout是打印
+				
+				system("pause");
+				
+				return 0;
+			}			
+		
+	3). 跳转语句
+		1. break语句	用于跳出选则结构或者循环结构
+			//a. 出现在switch选则语句中
+				int main()	{
+					cout << "请选则副本难度" << endl;
+					cout << "1、普通" << endl;
+					cout << "2、中等" << endl;
+					cout << "3、困难" << endl;
+					
+					int select = 0;		//创建选则结果的变量
+					
+					cin >> select;		//等待用户输入
+			
+					switch(select)
+					{
+					case 1:										//当select 为 1时执行
+						cout << "您选则是普通" << endl;		
+						break;									//每个case要主动退出 不然会一次执行下面case
+					case 2:										//当select 为 2时执行
+						cout << "您选则是中等" << endl;		
+						break;									//每个case要主动退出 不然会一次执行下面case
+					case 3:										//当select 为 3时执行
+						cout << "您选则是困难" << endl;		
+						break;									//每个case要主动退出 不然会一次执行下面case
+					}
+					
+					system("pause");
+					
+					return 0;
+				}	
+
+			//b. 出现在循环语句中
+				int main()	{
+					for(int i = 0; i < 10; i++)
+						if (i == 5)		//打印5次退出循环
+						{
+							break;
+						}
+						cout << i << endl;		
+					
+					system("pause");
+					
+					return 0;
+				}					
+			
+			//c. 出现在嵌套语句中
+				int main()	{
+					for(int i = 0; i < 10; i++)
+						for(int j = 0; j < 10; j++)
+						{
+							if (j == 5)		//少画一般
+							{
+								break;
+							}
+							cout << "*";
+						}
+						cout << endl;
+					
+					system("pause");
+					
+					return 0;
+				}			
+			
+		2. continue语句	用于跳出本次循环跳到下次循环		
+			//a. 输出奇数
+				int main()	{
+					for(int i = 0; i < 100; i++)
+						if (i % 2 == 0)		//少画一般
+						{
+							continue;
+						}
+						cout << i << endl;
+						
+					system("pause");
+					
+					return 0;
+				}	
+
+		3. goto语句	无条件跳转语句 如果标记的名称存在，执行到goto语句时，会跳转到标记的位置		
+			//goto语句 3 4 不执行直接执行5
+				int main()	{
+					cout << "1、xxxx" << endl;
+					
+					cout << "2、xxxx" << endl;
+					
+					goto FLAG;
+					
+					cout << "3、xxxx" << endl;
+					
+					cout << "4、xxxx" << endl;
+					
+					FLAG:
+					
+					cout << "5、xxxx" << endl;
+						
+					system("pause");
+					
+					return 0;
+				}				
