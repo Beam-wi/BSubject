@@ -1,0 +1,27 @@
+一、数据结构
+    1. sting:
+        string str("hello world");
+        长度        str.size();
+                    str.length();
+                    strlen(str.c_str());
+                    end(str) - begin(str);
+
+    2. 固定容器大小的array
+        长度        sizeof(array)/sizeof(array)[0];
+                    end(str) - begin(str);
+
+    3. vector向量
+        vector<int> vec1;               第一个是空的整形vector，我们没有给他添加任何元素。
+        vector<float> vec2(3);          第二个初始化了一个有3个元素的vector，由于并没有指定初始 值，将会使用编译器默认的初始值。
+        vector<char> vec3(3,'a');       第三个初始化了含有3个a的字符vector，括号中第二个值代表着所有元素的指定值。
+        vector<char> vec4(vec3);        第四个vector通过拷贝vec3中的元素初始化vec4，它们的元素会一模一样。
+
+        长度          vec2.size();
+        索引          vec3[0];
+        添加元素      vec2.push_back(1);
+        删除元素      vec2.pop_back(1);
+
+
+二、运算符
+    1. 平方         1、直接本身相乘A*A
+                    2、用函数pow进行求变量A的平方，即pow(A,2)
