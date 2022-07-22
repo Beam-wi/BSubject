@@ -4,4 +4,45 @@
         虽然已经对输入数据进行归一化处理，但这还不够，因为神经网络每一层训练参数的更新会使得数据的分布发生变化，而且，神经网络前面浅层的微小变化，到后面深层就会逐步把这种改变累积放大，在训练过程中将网络中间层数据分布的改变称之为："Internal Covariate Shift"。 Normalization的提出，就是要解决在训练过程中，网络中间层数据分布发生改变的情况，在每次传入网络的数据每一层的网络都进行一次normalization，将中间层分布发生改变的数据拉回正态分布，使得数据分布一致且避免后面梯度消失的问题。
 
 
+2、batch_normalization
+
+    首先将神经网络每一层的输出都整为方差为1，均值为0的正态分布，但是这样神经网络好不容易学习到的数据特征，被这样一整又回到解放前了，相当于没有学习了，所以这样是不行的，
+    大神想到了一个大招：变换重构，引入了两个可以学习的参数gamma和beta。Batch_normalization是分别在feature map的各个通道上进行均值和方差的计算的。
+
+    具体的计算方式如下：
+
+    （1）计算出batch_size数据的均值：
+        u
+
+    （2）计算出batch_size数据的方差：
+        の^2
+
+    （3）归一化处理，整为方差为1，均值为0的正态分布：
+        xf_i = (x_i-u)/更号(の^2-系噶玛)
+
+    （4）最后加入要训练的两个参数：缩放变量gamma和平移变量beta，计算归一化后的值
+        y_i = gamma*xf_i + beta
+
+    加入这两个参数后，网络就可以更加容易的学习到更多的东西了。如果当缩放变量gamma和平移变量beta分别等于batch_size数据的方差和均值时，最后得到的yi就和原来的xi一模一样了，
+    相当于batch normalization没有起作用了,这样就保证了每一次数据经过归一化后还保留学习到的特征，同时又能完成归一化这个操作，加快了训练。
+
+    缺点：
+    （1）在使用小batch_size时，batch_normalization的效果不好，因为小的batch_size计算出来的均值和方差不足以代替整个数据分布；
+    （2）当具有分布极不平衡二分类任务时也会出现不好的结果。
+
+3、Group Normalization
+    为了解决BN 时bachsize小时出现的效果查的问题
+
+    因此Group Normalization（GN）的思想并不复杂，简单讲就是要使归一化操作的计算不依赖batch size的大小，原文的这段话概括得非常好：
+    GN divides the channels into groups and computes within each group the mean and variance for normalization.
+    GN’s computation is independent of batch sizes, and its accuracy is stable in a wide range of batch sizes.
+
+    Figure2是几种归一化方式的对比（Bartch Norm、Layer Norm、Instance Norm和Group Norm），可以一并回顾下BN算法。Figure2中的立方体是三维，其中两维C和N分别表示channel和batch size，
+    第三维表示H,W，可以理解为该维度大小是H*W，也就是拉长成一维，这样总体就可以用三维图形来表示。可以看出BN的计算和batch size相关（蓝色区域为计算均值和方差的单元），
+    而LN、BN和GN的计算和batch size无关。同时LN和IN都可以看作是GN的特殊情况
+    LN：Layer Norm       group=1时候的GN，
+    IN: Instance Norm    group=C时候的GN
+    GN: Group Norm       group默认2
+
+
 
