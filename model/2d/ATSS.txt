@@ -1,0 +1,1 @@
+对 fcos 和 retinanet 的 政府样本 做限制，选择 anchor iou 大于均值+方差的作为正样本。

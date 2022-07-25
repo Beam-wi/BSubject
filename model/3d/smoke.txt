@@ -1,2 +1,9 @@
+传统的3D是通过先检测出2D目标再通过后序结构推理出3dbox  一帮是多阶段算法
+
 一、2D输入
-    1. SMOKE
+    1. SMOKE 用的centerNE dla3 backbone。
+        仅3d模块，基于keypoint直接回归3d属性，基于解耦loss来训练。
+    2. backbone出来接两个head 分类 和 回归（中心点，x y z, l, w, h, sita）
+        真实学习的是 x_t, y_t与centernet一样为heatmap由下采样引起的量化误差
+        z = 均值 + 方差*z_t
+        长宽高都为相对均值的缩放量
