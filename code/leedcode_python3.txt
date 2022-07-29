@@ -1,0 +1,176 @@
+一、函数
+    1.1 Counter() 计数器
+        1. Counter()可以统计字符串中每个字符出现的次数，也可以统计数组中每个数字出现的次数
+
+            print(Counter('aabbccc'))
+
+        2. 遍历成员Counter().items()
+
+            for val,cnt in Counter('aabbccc').items():
+                print(val,cnt)
+
+        3. 输出出现最多次数的一个成员Counter().most_common(1)如果不指定参数则列出所有
+
+            print(Counter('aabbccc').most_common(1))
+
+        4. 更新成员Counter().update()
+
+    1.2 enumerate() 索引数组
+        enumerate()会生成下标索引+内容
+
+        for i, element in enumerate(seq):
+            print i, element
+
+    1.3 defaultdict() 缺省字典
+        defaultdict()是python提供了一种默认值字典的数据结构。它允许我们在定义字典时给所有不存在的key设置默认值，这样当取不存在的key时，就不会报错。
+        （1）defaultdict(int)：初始化为 0
+        （2）defaultdict(float)：初始化为 0.0
+        （3）defaultdict(str)：初始化为""
+        （4）defaultdict(list)：初始化为[0]
+
+    1.4 deque() 队列
+        import collections
+
+        q = collections.deque()
+        s1 = q.popleft()取出队列左侧值并删除
+        q.append(s1)在队列右侧添加值
+
+    1.5 heapq 堆
+        默认最小堆，也就是第一个数永远是最小的
+
+        heapq.heapify(list) 申明堆
+        heapq.heappush(heap, item) heap为定义堆，item增加的元素
+        heapq.heappop(heap)删除并返回堆中最小值
+        heapq.heapreplace(heap，item) 删除堆中最小值并返回并添加新元素
+
+    1.6 reduce()
+        reduce(lambda x,y:x+y ,a) 将数组a的元素两两传入，并递归调用
+
+    1.7 map()
+        map(function,a)将数组a的元素传入并执行function函数
+
+二、数据结构
+    2.1 数组操作
+        array[::2]                              # 取所有偶数索引
+        array[1::2]                             取所有奇数索引
+        array[::-1]                             反转数组
+        array.sort()                            数组从小到大排列
+        array.sort(reverse=1)                   数组从大到小排列
+        array.sort(key=lambda x: (-x[0], x[1])) 将二维数组第一位降序排序，如果第一位相同，就按第二位升序排序，按照key的函数返回值进行从小到大排序
+        max()                                   求数组最大值
+        min()                                   求数组最小值
+        sum()                                   求数组和
+        set()                                   数组去重
+        choice()                                返回数组、元组或字符串随机数
+
+    2.2 有序列表  参考文档(四、有序列表)
+        index = bisect(ls, x)                   有序列表二分法查找获取索引值
+        biserct_right                           寻找右侧第一个值得索引+1, 返回索引+1
+        biserct_left                            寻找左侧第一个值, 如未查找到值，则返回合适的插入点索引，使得数组有序
+
+
+    2.3 列表
+        a. 增
+            list.append()数组尾部添加一个元素
+            list.insert(index,obj)插入指定位置
+
+        b. 删
+
+            list.pop()删除指定下标，默认最后一个
+            list.remove()默认删除某个值的第一个匹配项
+
+        c. 改
+
+            list[index] = value
+
+        d. 查
+
+            list.index(obj) 返回下标
+            if a in b判断在数组b中是否有a元素
+
+    2.4 哈希表&字典
+        hashmap = {} 创建字典
+        del hashmap[val]删除元素
+
+    2.5 字符串操作
+        s1.split() 将字符串按空格进行分割
+        s1.split('\n') 将字符串按换行进行分割
+        f'{L}({M}){R}' 字符串拼接{}
+        eval() 字符串表达式计算，返回计算结果
+        s1.isdigit()判断字符串是否全是由数字组成
+        s1.islower()判断字符串是否为小写字母
+
+三、 图搜索
+    1 方向表，即（x,y）的四周的方向。
+    2 状态表，用来判断该节点是否已经访问过了。
+    3 边界检测，在进行递归或者入队之前必须对边界进行检测，符合条件才能递归或者入队。
+    4 判断目标，如果出现目标则进行处理。
+
+    3.1 BFS 广度优先搜索
+        求无权图的最短路径
+        def bfs(graph, start):
+            # 创建一个set记录点是否已被遍历
+            visited = set()
+            q = Queue()
+            q.put(start)
+            while not q.empty():
+                u = q.get()
+                print(u)
+                for v in graph.get(u, []):
+                    if v not in visited:
+                        visited.add(v)
+                        q.put(v)
+        graph = {1: [4, 2], 2: [3, 4], 3: [4], 4: [5]}
+        bfs(graph, 1)
+
+    3.2 DFS 深度优先搜索
+        寻找两点之间所有路径。
+        求关键路径。因为它能发现所有路径，第一次dfs求出最长的路径，再dfs一次把所有等于这个长度的路径输出来，可能会输出好几条最长路径。这样就不用求什么最早最晚时间和拓扑了。
+
+四、有序列表
+    bisect()和bisect_right()等同，那下面就介绍bisect_left()和bisec_right()的区别！
+
+    1. 用法：
+
+        index1 = bisect(ls, x)   #第1个参数是列表，第2个参数是要查找的数，返回值为索引
+        index2 = bisect_left(ls, x)
+        index3 = bisec_right(ls, x)
+
+    2. 如果列表中没有元素x，那么bisect_left(ls, x)和bisec_right(ls, x)返回相同的值，该值是x在ls中“合适的插入点索引，使得数组有序”。此时，ls[index2] > x，ls[index3] > x。
+
+        import bisect
+        ls = [1,5,9,13,17]
+        index1 = bisect.bisect(ls,7)
+        index2 = bisect.bisect_left(ls,7)
+        index3 = bisect.bisect_right(ls,7)
+        print("index1 = {}, index2 = {}, index3 = {}".format(index1, index2, index3))
+
+    3. 程序运行结果为，
+
+        index1 = 2, index2 = 2, index3 = 2
+
+    4. 如果列表中只有一个元素等于x，那么bisect_left(ls, x)的值是x在ls中的索引，ls[index2] = x。而bisec_right(ls, x)的值是x在ls中的索引加1，ls[index3] > x。
+
+        import bisect
+        ls = [1,5,9,13,17]
+        index1 = bisect.bisect(ls,9)
+        index2 = bisect.bisect_left(ls,9)
+        index3 = bisect.bisect_right(ls,9)
+        print("index1 = {}, index2 = {}, index3 = {}".format(index1, index2, index3))
+
+    5. 程序运行结果为，
+
+        index1 = 3, index2 = 2, index3 = 3
+
+    6. 如果列表中存在多个元素等于x，那么bisect_left(ls, x)返回最左边的那个索引，此时ls[index2] = x。bisect_right(ls, x)返回最右边的那个索引加1，此时ls[index3] > x。
+
+        import bisect
+        ls = [1,5,5,5,17]
+        index1 = bisect.bisect(ls,5)
+        index2 = bisect.bisect_left(ls,5)
+        index3 = bisect.bisect_right(ls,5)
+        print("index1 = {}, index2 = {}, index3 = {}".format(index1, index2, index3))
+
+    7. 程序运行结果为，
+
+        index1 = 4, index2 = 1, index3 = 4

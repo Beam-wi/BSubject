@@ -1,0 +1,364 @@
+如果有额外的了解需求，可以在微软c++库函数 (https://docs.microsoft.com/zh-cn/cpp/standard-library/cpp-standard-library-reference?view=msvc-170) 进行了解
+
+一、数组
+    数组是刷题的开始，常用的库函数也很简单：
+
+    nums.insert(nums.begin(),1);    //在数组的最开始插入一个元素，如数字 1
+    nums.begin();                   //表示第一个元素的第一个元素nums[0]
+    nums.end();                     //表示最后一个元素的后一个元素
+    nums.size();                    //获得数组的长度
+    nums.resize(100);               //重设数组大小，此时里面所有元素为 0
+    for(int item:nums)
+        cout<<item;                 //遍历数组 输出全是0
+    sort(nums.begin(),nums.end());  //排序从小到大
+    reverse(nums1.begin(),nums1.end());//翻转数组，1.注意下面这个函数是将整个数组翻转,不是排序；2.如果要从大到小排序,需要自定义排序规则
+
+二、字符串
+
+    string s="123";                         //构造1
+    char *a="123";                          //构造2
+    string s = a;                           //构造3，a为 char *a="123";
+    reverse(result.begin(),result.end())    //翻转字符串
+    str.substr(start_index,len)             //截取字符串
+    s.length();                             //获得字符串的长度
+    s.resize(len+len2);                     //字符串扩容   string s(len);
+    string s(n,'0');                        //字符串初始化，s="00...00",初始化为n个0
+    int strcmp(string str1,string str2)     //区分字符串中字母大小写地比较，str1=str2时，返回0；str1>str时返回1；str1<str2时返回-1。
+    int strcasecmp(string str1,string str2) //忽略字符串中字母大小写地比较，str1=str2时，返回0；str1>str时返回1；str1<str2时返回-1。
+    a.find("12");                           //查找，返回字串第一个字符的下标，如果没有找到，返回string::npos
+        //char *a="123";
+        //替换
+        a.replace(1,2,"ab"); //替换 ab3
+
+    9、擦除
+
+        //char *a="123";
+        //删除子串
+        a.erase(1,2); //3
+
+    10、转化
+
+        //转成char *
+        a.c_str();
+
+    11、利用字符串压入
+
+        string s;
+        string arr;
+        arr.push_back(s[i]);
+
+三、vector
+    1、定义
+
+        //定义：
+        vector <int> v;
+
+    2、访问
+
+        //访问：
+        v[i];
+
+    3、大小
+
+        //大小
+        v.size();
+
+    4、更新
+
+        //更新
+        v[i]=a;
+
+    5、末尾插入
+
+        //末尾插入
+        v.push_back(a);
+
+    6、末尾删除
+
+        //末尾删除
+        v.pop_back();
+
+    7、清空
+
+        //清空
+        v.clear();
+
+    8、空判断
+
+        //判断空
+        v.empty();
+
+    9、排序
+
+        //排序
+        sort(v.begin(),v.end());//从小到大
+        sort(v.rbegin(),v.rend());//从大到小
+
+    10、翻转
+
+        //翻转
+        reverse(v.begin(),v.end());
+
+    11、自定义排序
+
+        bool compare(int a,int b)
+        {
+            return a< b; //升序排列，如果改为return a>b，则为降序
+        }
+        sort(v.begin(),v.end(),compare);
+
+    12、合并
+
+        vector.insert(vector.end(),vector1.begin(),vector1.end())
+
+四、哈希表
+    1、set
+        set主要作用是自动去重，对于期望得到不重复的结果，使用set维护输出列表。由于set，multiset通过平衡二叉树实现，有自动排序功能。set不允许重复，multiset允许重复
+
+        //定义
+        set<int> s;
+        //添加元素
+        s.insert(i);
+        //删除元素
+        s.erase(i);
+        //查找元素 返回指针
+        s.find(i);
+        //大小
+        s.size();
+        //遍历
+        for(set<int>::iterator it=s.begin(); it!=s.end();it++)
+        {
+            cout<<*it<<endl;
+        }
+        //范围查找
+        m.lower_bound(elem);
+        m.upper_bound(elem);
+
+
+    2、map
+        map是一个使用键值对key-value 模式的容器，map不允许重复键值，而multimap允许重复键值。适用于词频统计类的问题。map的底层是红黑树。
+        hashmap操作与map相同，但是底层是hash表，可以在O(1)时间内完成访问操作。
+
+        //定义
+        map<char*, int> m;
+        //插入
+        m.insert(pair<char *, int>(key,value))
+        m[key]=value;
+        //删除
+        m.erase(key);
+        //访问
+        m[key];//如果没有这个key，则返回0
+        //遍历
+        for(map<char *,int>::iterator it=m.begin();it!=m.end();it++)
+        {
+            cout<<it->first<<" "<<it->second<<endl;
+        }
+        //大小
+        m.size();
+        //清空
+        m.clear();
+        //返回a的列数
+        m[i].size()
+
+        map内通过key找value和通过value找key
+
+        //创建
+        map<int,char > aMap;
+            /**插入初始化的元素**/
+            /*	//1.用insert函數插入pair
+                aMap.insert(pair<string, string>("r000", "student_zero"));
+
+                //2.用"array'方式插入
+            */
+
+            aMap[0] = 'o';
+            aMap[1] = 'a';
+            aMap[2] = 'b';
+            aMap[3] = 'c';
+            aMap[4] = 'd';
+            aMap[5] = 'd';//故意弄个重复的value
+
+            int key =2;
+            char value='d';
+
+            //通过key找value
+            if(aMap.count(key)>0)
+            {
+                cout<<"通过key:  "<<key<<"     找到的value:"<<aMap[key]<<endl;
+            }
+
+            //通过value找 key
+            for(std::map<int,char>::iterator it = aMap.begin();it!=aMap.end();it++)
+            {
+                if(it->second==value)
+                    cout<<"通过value:  "<<value<<"    找到的key:"<<it->first<<endl;
+            }
+
+五、栈
+    1、初始化栈
+
+        stack<int> s;
+
+    2、入栈
+
+        s.push(1);
+
+    3、出栈
+
+        s.pop();
+
+    4、栈空
+
+        bool b = s.empty()    // 栈空返回true
+
+    5、得到栈顶元素但不弹出
+
+        int a = s.top();
+
+    6、得到栈顶元素并弹出
+
+        // 没有库函数可以直接既弹出又得到值
+        int a = s.top();
+        s.pop();
+
+六、队列
+    1、声明一个队列
+
+        queue<TreeNode*> q;
+
+    2、队列长度
+
+        q.size()
+
+    3、进队
+
+        q.push(root);
+
+    4、出队，并不能获得出队元素
+
+        q.pop();
+
+    5、获得队头元素，但不会弹出这个元素
+
+        TreeNode *temp = q.front();
+
+    6、取出队头元素并弹出
+
+        TreeNode *temp = q.front();
+        q.pop();
+
+    7、获得队尾元素，但不会弹出这个元素
+
+        q.back()
+
+    8、双端队列
+
+        //定义
+        deque<int> d;
+        //增加头元素
+        d.push_front(i);
+        //增加尾元素
+        d.push_back(i);
+        //访问头元素
+        d.front();
+        //访问尾元素
+        d.back();
+        //删除头
+        d.pop_front();
+        //删除尾
+        d.pop_back();
+        //判空
+        d.empty();
+        //长度
+        d.size();
+
+七、树
+    1、前序遍历（根，左子，右子）
+
+        /**
+         * Definition for a binary tree node.
+         * struct TreeNode {
+         *     int val;
+         *     TreeNode *left;
+         *     TreeNode *right;
+         *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+         * };
+         */
+        class Solution {
+        public:
+            void preorder(TreeNode* root,vector<int>&res ){
+                if(root==nullptr){
+                    return;
+                }
+                res.push_back(root->val);
+                preorder(root->left,res);
+                preorder(root->right,res);
+            }
+            vector<int> preorderTraversal(TreeNode* root) {
+                vector <int> res;
+                preorder(root,res);
+                return res;
+            }
+        };
+
+    2、中序遍历（左子，根，右子）
+
+        /**
+         * Definition for a binary tree node.
+         * struct TreeNode {
+         *     int val;
+         *     TreeNode *left;
+         *     TreeNode *right;
+         *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+         * };
+         */
+        class Solution {
+        public:
+            void inorder(TreeNode*root,vector<int>&res){//记得vector传址
+                if(root==nullptr){
+                    return;
+                }
+                inorder(root->left,res);
+                res.push_back(root->val);
+                inorder(root->right,res);
+            }
+            vector<int> inorderTraversal(TreeNode* root) {
+                vector<int>res;
+                inorder(root,res);
+                return res;
+            }
+        };
+
+    3、后序遍历（左子，右子，根）
+
+        /**
+         * Definition for a binary tree node.
+         * struct TreeNode {
+         *     int val;
+         *     TreeNode *left;
+         *     TreeNode *right;
+         *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+         *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+         * };
+         */
+        class Solution {
+        public:
+            void postorder(TreeNode* root,vector<int>&res){
+                if(root==nullptr){
+                    return;
+                }
+                postorder(root->left,res);
+                postorder(root->right,res);
+                res.push_back(root->val);
+            }
+            vector<int> postorderTraversal(TreeNode* root) {
+                vector<int >res;
+                postorder(root,res);
+                return res;
+            }
+        };
