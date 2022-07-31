@@ -86,3 +86,14 @@
 
 
 
+5. 常见问题
+    1. 调试时
+        现象：
+            啥都没有程序直接就结束了。
+        报错：
+            调试控制台能找到报错信息
+            ERROR: Unable to start debugging. Unexpected GDB output from command "-exec-run". During startup pro
+        原因和解决方法：
+            原因是编译器冲突了，环境变量中有和编译器中用到的文件一样的文件名导致冲突，方法是将mingw64 的环境变量往前移。
+
+
