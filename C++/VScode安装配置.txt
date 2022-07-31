@@ -24,24 +24,28 @@
         终端输入：gcc -v
         出现信息即安装配置完成
 
-4. VSCode安装C++相关包
+4. VSCode安装C++插件
     进入 Manage->Extensions 搜索安装下面安装包
-    1. C/C++
-    2. Code Runner
-    3. C/C++ Compile Run
-    4. Better C++ Syntax
+    1. C/C++                //回退到1.8.4，因为新的版本不会自动生成编译文件launch.json和task.json,需手动配置麻烦，不配好没法调试
+    2. Chinese Simple       //习惯用英文的可以不安装
 
+    安装以上就行了，以下可自行选择
+    3. Code Runner
+    4. C/C++ Compile Run
+    5. Better C++ Syntax
+
+    以下是一些相关设置
     等以上两个插件安装后，新建一个cpp文件，并写代码，ctrl alt N 运行代码
-    5. 设置滚轮缩放
+    6. 设置滚轮缩放
         Manage->Settings 搜索 editor.mouse 勾选 Mouse Wheel Zoom
-    6. 设置自动保存
+    7. 设置自动保存
         Manage->Settings 搜索 autoSave 将下面auto save改为 afterDelay
-    7. 修改中文字体
+    8. 修改中文字体
         Manage->Settings->Text Editor->Font 将Font Family中第二个改为 'SimHei'。第一个是英文字体。
-    6. 修改自动格式化
+    9. 修改自动格式化
         Manage->Settings 搜索 set 点击 Edit in settings.json在文件中添加
             "C_Cpp.clang_format_style": "{ BasedOnStyle: Chromium, IndentEidth: 4 }"
-    7. 配置cpp模板
+    10. 配置cpp模板
         File->Preferences->Configure User Snippets->New Global Snippets file...
         随便输入一个英文名：CppCode 改写
             {
@@ -71,4 +75,13 @@
                 }
             }
         调用时直接cpp回车或缩进都可以。
+
+    11. 设置外置终端运行程序
+        launch.json中args修改
+            "externalConsole": true,
+
+    12. 解决中文乱码
+        task.json中args添加
+            "-fexec-charset=GBK"
+
 
