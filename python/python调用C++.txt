@@ -1,0 +1,20 @@
+python调用C++ 的方法有 pybind11, boost.python, swig, ctypes, 其中ctypes是专门调用C的，调用C++代码前要加安照C编译
+
+2.1 SWIG
+    支持Python、Java、Ruby等语言调用C接口
+    文档全面，易于学习
+    绑定性能欠佳， 不支持属性和内部类封装
+    C++支持不好
+
+2.2 Boost::Python
+    支持Python2与Python3调用C++接口
+    大量使用C++ templates，明显提高编译时间
+    非常可靠、稳定、经过充分测试
+    语法较复杂，且文档不详细
+
+
+    本文采用Boost::Python进行C++/Python联合编程。
+
+2.3 ctypes
+    灵活，完全兼容C语言
+    使用较繁琐且不支持C++特性
