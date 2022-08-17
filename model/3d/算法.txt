@@ -1,0 +1,6 @@
+单目视觉2.5D：
+    smoke、fcos_3d、yolo_3d、monoflex
+    https://github.com/open-mmlab/mmdetection3d/tree/master/configs
+
+多个camera bev视角下的：
+    detr3d、petr、petrv2、bevformer、bevformer++、bevdet、bevdepth
