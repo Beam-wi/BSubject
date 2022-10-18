@@ -1,0 +1,44 @@
+IoU loss:
+    IoU loss = -ln(Intersection/Union)
+
+GIoU loss
+    GIoU = IoU - (A^c - U)/A^c
+    GIoU loss = 1 - GIoU
+
+    A^c为两个矩形最小外接矩形，U为两个面积交集。
+    计算GIoU损失的方式其实就是计算GIoU，只不过最终结果返回的时1-GIoU。
+    这是因为1-GIoU的取值范围在[0,2]上，且有一定的“距离”性质，即两个框重叠区域越大，损失越小，反之越大。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

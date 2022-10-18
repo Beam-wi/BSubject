@@ -1,0 +1,5 @@
+交叉熵损失：
+    H(p, q) = - 求和(p(x_i) * log(q(x_i)))
+
+focal loss:
+    FL = -(1-p_t)^gama*long(p_t)
