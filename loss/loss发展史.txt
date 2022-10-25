@@ -37,7 +37,7 @@ L1，L2，smooth L1损失函数
 
         L1=|x|
         L2=x2
-                   0.5x_2       if|x|<1
+                   0.5x^2       if|x|<1
         smoothL1={
                    |x|−0.5      otherwise
 
